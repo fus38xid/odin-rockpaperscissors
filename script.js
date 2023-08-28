@@ -23,25 +23,62 @@ function playerSelection() {
 
 //playerSelection(); doesnt work with the playround function must be called within the playRound
 
-function playRound(playerSelection, getComputerChoice) {
-    //compare playerSelection to getComputerChoice
-    //return the outcome
-    if (playerSelection === "ROCK" && getComputerChoice === "Scissors") {
-        return "You Win! Rock beats Scissors";
-    } else if (playerSelection === "ROCK" && getComputerChoice === "Paper") {
-        return "You Lose! Paper beats Rock";
-    } else if (playerSelection === "PAPER" && getComputerChoice === "Rock") {
-        return "You Win! Paper beats Rock";
-    } else if (playerSelection === "PAPER" && getComputerChoice === "Scissors") {
-        return "You Lose! Scissors beats Paper";
-    } else if (playerSelection === "SCISSORS" && getComputerChoice === "Paper") {
-        return "You Win! Scissors beats Paper";
-    } else if (playerSelection === "SCISSORS" && getComputerChoice === "Rock") {
-        return "You Lose! Rock beats Scissors";
-    } else {
-        return "It's a tie!";
+
+//console.log("HUMAN: "+SCORES_HUMAN+" COMPUTER: "+SCORES_COMPUTER); 
+//playRound 5 times
+//game reports score after total of 5 times played 
+
+function game() {
+    //Scoreboard
+    let SCORES_HUMAN = 0;
+    let SCORES_COMPUTER = 0;
+
+    for(let i = 0; i<5; i++) {
+        playRound();
+        console.log(playRound(playerSelection(), getComputerChoice()));
+        
+    }
+
+    if(SCORES_HUMAN > SCORES_COMPUTER) {
+        console.log("You Win!");
+    } else if(SCORES_HUMAN < SCORES_COMPUTER) {
+        console.log("You Lose!");
     }
     
+    console.log("HUMAN: "+ SCORES_HUMAN +" COMPUTER: "+ SCORES_COMPUTER);
+
+
+
+
+    function playRound(playerSelection, getComputerChoice) {
+        //compare playerSelection to getComputerChoice
+        //return the outcome
+        if (playerSelection === "ROCK" && getComputerChoice === "Scissors") {
+            SCORES_HUMAN++;
+            return "You Win! Rock beats Scissors";
+        } else if (playerSelection === "ROCK" && getComputerChoice === "Paper") {
+            SCORES_COMPUTER++;
+            return "You Lose! Paper beats Rock";
+        } else if (playerSelection === "PAPER" && getComputerChoice === "Rock") {
+            SCORES_HUMAN++;
+            return "You Win! Paper beats Rock";
+        } else if (playerSelection === "PAPER" && getComputerChoice === "Scissors") {
+            SCORES_COMPUTER++;
+            return "You Lose! Scissors beats Paper";
+        } else if (playerSelection === "SCISSORS" && getComputerChoice === "Paper") {
+            SCORES_HUMAN++;
+            return "You Win! Scissors beats Paper";
+        } else if (playerSelection === "SCISSORS" && getComputerChoice === "Rock") {
+            SCORES_COMPUTER++;
+            return "You Lose! Rock beats Scissors";
+        } else {
+            return "It's a tie!";
+        }
+
+    }
+
+
+
 }
 
-console.log(playRound(playerSelection(), getComputerChoice()));
+game();
