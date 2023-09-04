@@ -1,114 +1,113 @@
-    /*
-    REMINDER: to push changes use: git push origin rps-ui
-    
+function getComputerChoice (){
+    //select Rock Paper or Scissors at random
+    //return the choice
+    const PICK = ["Rock", "Paper", "Scissors"];
 
-    TODO:
+    const random = Math.floor(Math.random() * PICK.length);
+    return (PICK[random]);
 
+}
 
-    2.    Create three buttons, one for each selection. Add an event listener to the buttons that call your playRound function with the correct playerSelection every time a button is clicked. (you can keep the console.logs for this step)
-    3.    Add a div for displaying results and change all of your console.logs into DOM methods.
-    4.    Display the running score, and announce a winner of the game once one player reaches 5 points.
-    5.    You will likely have to refactor (rework/rewrite) your original code to make it work for this. That’s OK! Reworking old code is an important part of a programmer’s life.
-
-    DONE:
-        ✅ 1.    For now, remove the logic that plays exactly five rounds.
-        
+let SCORES_HUMAN = 0;
+let SCORES_COMPUTER = 0;
 
 
-    */
-
-    document.getElementById("ROCK").onclick = playerSelection;
-    document.getElementById("PAPER").onclick = playerSelection;
-    document.getElementById("SCISSORS").onclick = playerSelection;
+const SCORES_HUMAN_TEXT = document.getElementById("SCORES_HUMAN");
+const SCORES_COMPUTER_TEXT = document.getElementById("SCORES_COMPUTER");
 
 
+const ROCK = document.getElementById("ROCK");
+const PAPER = document.getElementById("PAPER");
+const SCISSORS = document.getElementById("SCISSORS");
 
-    function getComputerChoice (){
-        //select Rock Paper or Scissors at random
-        //return the choice
-        const PICK = ["Rock", "Paper", "Scissors"];
 
-        const random = Math.floor(Math.random() * PICK.length);
-        return (PICK[random]);
+function updateScores() {
+  SCORES_HUMAN_TEXT.innerHTML = SCORES_HUMAN;
+  SCORES_COMPUTER_TEXT.innerHTML = SCORES_COMPUTER;
+}
 
-    }
 
-    getComputerChoice();
-    /*
-    console.log(getComputerChoice());
+ROCK.addEventListener("click", function (e){
+  playRound ("ROCK");
 
-    */
+});
+PAPER.addEventListener("click", function (e){
+  playRound("PAPER");
 
-    function playerSelection() {
-        //prompt user for their choice
-        //return the choice
-        //let playerChoice = prompt("Rock, Paper, or Scissors?");
-        playerChoice = this.id;
-        console.log(playerChoice);
-        return playerChoice;
-    }
+});
+SCISSORS.addEventListener("click", function (e){
+  playRound("SCISSORS");
+
+});
 
 
 
 
-    //playerSelection(); doesnt work with the playround function must be called within the playRound
 
-
-    //console.log("HUMAN: "+SCORES_HUMAN+" COMPUTER: "+SCORES_COMPUTER); 
-    //playRound 5 times
-    //game reports score after total of 5 times played 
-
-    function game() {
-        //Scoreboard
-        let SCORES_HUMAN = 0;
-        let SCORES_COMPUTER = 0;
-
-        //for(let i = 0; i<5; i++) {
-            playRound();
-            console.log(playRound(playerSelection(), getComputerChoice()));
-            
-        //}
-
-        if(SCORES_HUMAN > SCORES_COMPUTER) {
-            console.log("You Win!");
-        } else if(SCORES_HUMAN < SCORES_COMPUTER) {
-            console.log("You Lose!");
-        }
-        
-        console.log("HUMAN: "+ SCORES_HUMAN +" COMPUTER: "+ SCORES_COMPUTER);
-
-
-
-
-        function playRound(playerSelection, getComputerChoice) {
-            //compare playerSelection to getComputerChoice
-            //return the outcome
-            if (playerSelection === "ROCK" && getComputerChoice === "Scissors") {
-                SCORES_HUMAN++;
-                return "You Win! Rock beats Scissors";
-            } else if (playerSelection === "ROCK" && getComputerChoice === "Paper") {
-                SCORES_COMPUTER++;
-                return "You Lose! Paper beats Rock";
-            } else if (playerSelection === "PAPER" && getComputerChoice === "Rock") {
-                SCORES_HUMAN++;
-                return "You Win! Paper beats Rock";
-            } else if (playerSelection === "PAPER" && getComputerChoice === "Scissors") {
-                SCORES_COMPUTER++;
-                return "You Lose! Scissors beats Paper";
-            } else if (playerSelection === "SCISSORS" && getComputerChoice === "Paper") {
-                SCORES_HUMAN++;
-                return "You Win! Scissors beats Paper";
-            } else if (playerSelection === "SCISSORS" && getComputerChoice === "Rock") {
-                SCORES_COMPUTER++;
-                return "You Lose! Rock beats Scissors";
-            } else {
-                return "It's a tie!";
-            }
-
-        }
+function playRound(playerSelection) {
+  computerChoice = getComputerChoice()
+  //compare playerSelection to getComputerChoice
+  //return the outcome
+  if (playerSelection === "ROCK" && computerChoice === "Scissors") {
+    SCORES_HUMAN++;
+    updateReasonRockWINSScissors();
+  } else if (playerSelection === "ROCK" && computerChoice === "Paper") {
+    SCORES_COMPUTER++;
+    updateReasonRockLOSESPaper();
+  } else if (playerSelection === "PAPER" && computerChoice === "Rock") {
+    SCORES_HUMAN++;
+    updateReasonPaperWINSRock();
+  } else if (playerSelection === "PAPER" && computerChoice === "Scissors") {
+    SCORES_COMPUTER++;
+    updateReasonPaperLOSESScissors();
+  } else if (playerSelection === "SCISSORS" && computerChoice === "Paper") {
+    SCORES_HUMAN++;
+    updateReasonScissorsWINSPaper();
+  } else if (playerSelection === "SCISSORS" && computerChoice === "Rock") {
+    SCORES_COMPUTER++;
+    updateReasonScissorsLOSESRock();
+  } else {
+    updateReasonTie();
+  }
+  updateScores()
+}
 
 
 
-    }
 
-    game();
+//REASONS FOR WIN LOSE TIE
+
+const SCORES_REASON_TEXT = document.getElementById("REASON");
+
+function updateReasonRockWINSScissors() {
+    switchCase("You Win! Rock beats Scissors!");
+}
+
+function updateReasonRockLOSESPaper() {
+    switchCase("You Lose! Rock gets beaten by Paper!");
+}
+
+function updateReasonPaperWINSRock() {
+    switchCase("You Win! Paper beats Rock!");
+}
+
+function updateReasonPaperLOSESScissors() {
+    switchCase("You Lose! Paper gets beaten by Scissor!");
+}
+
+function updateReasonScissorsWINSPaper() {
+    switchCase("You win! Scissors beat Paper!");
+}
+
+function updateReasonScissorsLOSESRock() {
+    switchCase("You lose! Scissors gets beaten by Rock!");
+}
+
+function updateReasonTie() {
+    switchCase("It's a tie!");
+}
+
+function switchCase(reasonText) {
+    SCORES_REASON_TEXT.innerHTML = reasonText;
+    return reasonText;
+}
