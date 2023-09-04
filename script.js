@@ -118,6 +118,3 @@ function playRound(playerSelection) {
     switchCase("Game reset.");
   }
   
-  // ... (remaining code)
-  
-  
